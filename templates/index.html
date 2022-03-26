@@ -5,14 +5,55 @@
     <title>{{ title }}</title>
 </head>
 <body>
+    {% if msg %}
     <h1>{{ title }}</h1>
-    <p>{{ message|safe }}</p>
-    <table>
     <form action="{% url 'index' %}" method="post">
         {% csrf_token %}
         {{ form.as_table }}
         <tr><td></td><td><input type="submit" value="click"></td></tr>
     </form>
+    <table>
+        <h3>通算戦績</h3>
+        <tr>
+        <th>総試合数</th>
+        <th>最終レート</th>
+        <th>最高レート</th>
+        <th>最低レート</th>
+        <th>平均レート</th>
+        <th>中央値</th>
+    </tr>
+    <tr>
+      <td>{{ results.0 }}</td>
+      <td>{{ results.1 }}</td>
+      <td>{{ results.2 }}</td>
+      <td>{{ results.3 }}</td>
+      <td>{{ results.4 }}</td>
+      <td>{{ results.5 }}</td>
+    <tr>
+    </table>
+    <table>
+        <h3>ファイター別戦績</h3>
+        <table class="table table-condensed">
+        <tr>
+            <th class="table-primary">ファイター</th>
+            <th class="table-primary">試合数</th>
+            <th class="table-primary">通算戦績</th>
+        </tr>
+        <tr>
+            {% for key,val in dic.items %}
+            <th>{{ key }}</th>
+            <th>{{ val.record|length }}</th>
+            <th>{{ val.result }}</th>
+        </tr>
+        {% endfor %}
+    {% else %}
+    <h1>{{ title }}</h1>
+    <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <tr><td></td><td><input type="submit" value="click"></td></tr>
+    </form>
+        {% endif %}
     </table>
 </body>
 </html>

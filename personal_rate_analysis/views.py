@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from .forms import UrlForm
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .mate import main
 
 
@@ -17,9 +17,15 @@ class IndexView(TemplateView):
 
     def post(self, request):
         url = request.POST["url"]
-        main(url)
+        print(url)
+        li,dic = main(url)
 
-        self.params['message'] = url
-        self.params['form'] = UrlForm(request.POST)
+        self.params = {
+            'title': '戦績',
+            'form': UrlForm(),
+            'msg' : '取得した',
+            'results' : li,
+            'dic' : dic,
+        }
 
         return render(request, 'index.html', self.params)
