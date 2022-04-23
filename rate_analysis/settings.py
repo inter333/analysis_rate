@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'personal_rate_analysis',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

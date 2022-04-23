@@ -1,0 +1,42 @@
+{% extends 'personal_rate_analysis/base.html' %}
+
+{% block content %}
+    {% if msg %}
+    <table class="table table-condensed">
+        <h3>通算戦績</h3>
+        <tr>
+        <th class="table-primary">総試合数</th>
+        <th class="table-primary">最終レート</th>
+        <th class="table-primary">最高レート</th>
+        <th class="table-primary">最低レート</th>
+        <th class="table-primary">平均レート</th>
+        <th class="table-primary">中央値</th>
+    </tr>
+    <tr>
+      <th>{{ results.0 }}</th>
+      <th>{{ results.1 }}</th>
+      <th>{{ results.2 }}</th>
+      <th>{{ results.3 }}</th>
+      <th>{{ results.4 }}</th>
+      <th>{{ results.5 }}</th>
+    <tr>
+    </table>
+    <table>
+        <h3>ファイター別戦績</h3>
+        <table class="table table-condensed">
+        <tr>
+            <th class="table-primary">ファイター</th>
+            <th class="table-primary">試合数</th>
+            <th class="table-primary">収支</th>
+            <th class="table-primary">通算戦績</th>
+        </tr>
+        <tr>
+            {% for key,val in dic.items %}
+            <th>{{ key }}</th>
+            <th>{{ val.record|length }}</th>
+            <th>{{ val.total }}</th>
+            <th>{{ val.result }}</th>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        {% endblock %}
