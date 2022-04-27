@@ -50,6 +50,7 @@ class MateManager:
             name = re.sub(".png","",name)
             name = Fighter.objects.get(fighter_en=name)
             name = name.fighter_ja
+            print(name)
             if "-" in str(g_rate):
                 win_lose= "負け"
             else:
@@ -77,9 +78,12 @@ class MateManager:
         Return:
             return:既に取得したレートをまとめたリスト
         """
+        print("前",g_rate)
+
         if rate_list:
             rate = rate_list[-1]
         rate += g_rate
+        print("結果",rate)
         rate_list.append(rate)
         return rate_list
 
@@ -117,10 +121,13 @@ class MateManager:
                     g_rate = -g_rate
                 else:
                     g_rate = 0
+                    count += 1
+                    contents_count -= 1
+                    continue
                 rate_list = self.add_rate_list(rate,g_rate,rate_list)
                 dic = self.update_char_result(char_content,g_rate,dic)
             count += 1
-        return rate_list,rate,dic
+        return rate_list,rate,dic,contents_count
 
     def save_rate(self,rate_list,user_id,mate_id,span):
         """レートの情報を保存するメソッド
@@ -206,26 +213,27 @@ class MateManager:
             user_id = User.objects.create(mate_id=mate_id,user=user_name)
             user_id = user_id.id
 
+        page = soup.select('div.pageing ul.pagination li')
+        page_count = int(page[-2].text)
+        if not page:
+            page_count = 1
+        else:
+            page_count = int(page[-2].text)
+
+
         #対戦データを取得するループ
 
         while  now_number_of_matches  != 0:
-            page_count = -(-now_number_of_matches // 20)
             new_link = link + "?page=" + str(page_count)
             new_soup = self.load_soup(new_link)
             div = new_soup.select('div.smash-row.mb-20')
             if div:
                 content = div[0].select('span.rate_text')
                 char_content = div[0].select('div.row.row-center.va-middle.row-nomargin div.col-xs-8')
-                rate_list,rate,battle_record_dic = self.operate_rate_information(rate_list,rate,char_content,content,battle_record_dic,now_number_of_matches)
-                if now_number_of_matches > 20 and (now_number_of_matches % 20 == 0):
-                    now_number_of_matches -= 20
-                elif now_number_of_matches > 20:
-                    now_number_of_matches -= now_number_of_matches % 20
-                else:
-                    now_number_of_matches = 0
+                rate_list,rate,battle_record_dic,contens_count = self.operate_rate_information(rate_list,rate,char_content,content,battle_record_dic,now_number_of_matches)
+                now_number_of_matches -= contens_count
+                page_count -= 1
                 time.sleep(2)
-            else:
-                break
 
         #取得したデータをDBにいれる
 
