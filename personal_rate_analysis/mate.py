@@ -116,7 +116,7 @@ class MateManager:
                     g_rate = int(content.text.replace("－",""))
                     g_rate = -g_rate
                 else:
-                    pass
+                    g_rate = 0
                 rate_list = self.add_rate_list(rate,g_rate,rate_list)
                 dic = self.update_char_result(char_content,g_rate,dic)
             count += 1
