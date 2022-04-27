@@ -1,7 +1,7 @@
 {% extends 'personal_rate_analysis/base.html' %}
 
 {% block content %}
-    {% if msg %}
+    {% if not msg %}
     <table class="table table-condensed">
         <h3>通算戦績</h3>
         <tr>
@@ -13,12 +13,12 @@
         <th class="table-primary">中央値</th>
     </tr>
     <tr>
-      <th>{{ results.0 }}</th>
-      <th>{{ results.1 }}</th>
-      <th>{{ results.2 }}</th>
-      <th>{{ results.3 }}</th>
-      <th>{{ results.4 }}</th>
-      <th>{{ results.5 }}</th>
+      <th>{{ user_result.number_of_matches }}</th>
+      <th>{{ user_result.last_rate }}</th>
+      <th>{{ user_result.max_rate }}</th>
+      <th>{{ user_result.min_rate }}</th>
+      <th>{{ user_result.ave_rate }}</th>
+      <th>{{ user_result.median_rate }}</th>
     <tr>
     </table>
     <table>
@@ -31,11 +31,11 @@
             <th class="table-primary">通算戦績</th>
         </tr>
         <tr>
-            {% for key,val in dic.items %}
-            <th>{{ key }}</th>
-            <th>{{ val.record|length }}</th>
-            <th>{{ val.total }}</th>
-            <th>{{ val.result }}</th>
+            {% for item in char_result %}
+            <th>{{ item.fighter }}</th>
+            <th>{{ item.number_of_matches }}</th>
+            <th>{{ item.rate_balance }}</th>
+            <th>{{ item.results }}</th>
         </tr>
         {% endfor %}
         {% endif %}

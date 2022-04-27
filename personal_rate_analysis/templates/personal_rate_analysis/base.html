@@ -20,6 +20,9 @@
     {% if error_message %}
     <b class="input_form_error">{{ error_message }}</b><br><br>
     {% endif %}
+    {% if msg %}
+    <h3>{{ msg }}</h3>
+    {% endif %}
     {% block content %}{% endblock %}
 </body>
 </html>
