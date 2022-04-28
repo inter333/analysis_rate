@@ -50,7 +50,6 @@ class MateManager:
             name = re.sub(".png","",name)
             name = Fighter.objects.get(fighter_en=name)
             name = name.fighter_ja
-            print(name)
             if "-" in str(g_rate):
                 win_lose= "負け"
             else:
@@ -78,12 +77,10 @@ class MateManager:
         Return:
             return:既に取得したレートをまとめたリスト
         """
-        print("前",g_rate)
 
         if rate_list:
             rate = rate_list[-1]
         rate += g_rate
-        print("結果",rate)
         rate_list.append(rate)
         return rate_list
 
