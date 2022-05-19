@@ -163,7 +163,7 @@ class MateManager:
         battle_record_dic = {}
         rate_list = []
         rate = 1500
-        span = 16
+        span = 19
         soup = self.load_soup(link)
         time.sleep(3)
 
