@@ -176,13 +176,14 @@ class MateManager:
 
         #最新の試合数・メイトIDを取得
 
-        now_number_of_matches = now_number_of_matches[3].text
+        now_number_of_matches = now_number_of_matches[5].text
         now_number_of_matches = re.sub(r"[ \t\n敗]", "", now_number_of_matches)
         now_number_of_matches = now_number_of_matches.split(('勝'))
         if '現在' in now_number_of_matches[1]:
             now_number_of_matches[1] = re.match("(.*現在)",now_number_of_matches[1]).group(1)
             now_number_of_matches[1] = re.sub("現在","",now_number_of_matches[1])
         now_number_of_matches = int(now_number_of_matches[0]) + int(now_number_of_matches[1])
+        #now_number_of_matches = now_number_of_matches[0]
 
         mate_id = re.sub(r"\D", "", link)
         user_obj = User.objects.filter(mate_id=mate_id).values()
