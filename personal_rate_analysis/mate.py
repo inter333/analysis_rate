@@ -84,7 +84,7 @@ class MateManager:
         rate_list.append(rate)
         return rate_list
 
-    def operate_rate_information(self,rate_list,rate,chars,contents,dic,now_number_of_matches):
+    def operate_rate_information(self,rate_list,rate,chars,contents,dic,now_number_of_matches,max_nunber_of_mattches):
         """httmlからレートの収支を取得し各メソッドに渡すメソッド
 
         取得したレートをadd_rate_list,update_char_resultに渡す
@@ -104,7 +104,7 @@ class MateManager:
         contents_count = len(contents)
         contents = reversed(contents)
         char_contents = reversed(chars)
-        if now_number_of_matches < 20:
+        if now_number_of_matches < max_nunber_of_mattches:
             increment = contents_count - now_number_of_matches
         else:
             increment = 0
@@ -164,6 +164,8 @@ class MateManager:
         rate_list = []
         rate = 1500
         span = 19
+        #1ページの最大試合数
+        max_nunber_of_mattches = 20
         soup = self.load_soup(link)
         time.sleep(3)
 
@@ -228,7 +230,7 @@ class MateManager:
             if div:
                 content = div[0].select('span.rate_text')
                 char_content = div[0].select('div.row.row-center.va-middle.row-nomargin div.col-xs-8')
-                rate_list,rate,battle_record_dic,contens_count = self.operate_rate_information(rate_list,rate,char_content,content,battle_record_dic,now_number_of_matches)
+                rate_list,rate,battle_record_dic,contens_count = self.operate_rate_information(rate_list,rate,char_content,content,battle_record_dic,now_number_of_matches,max_nunber_of_mattches)
                 now_number_of_matches -= contens_count
                 page_count -= 1
                 time.sleep(2)
