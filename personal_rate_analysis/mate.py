@@ -201,7 +201,7 @@ class MateManager:
                 user_id = user_result_obj[0]["id"]
                 number_of_matches = user_result_obj[0]["number_of_matches"]
                 if now_number_of_matches != number_of_matches:
-                    now_number_of_matches = number_of_matches - now_number_of_matches
+                    now_number_of_matches = now_number_of_matches - number_of_matches
                 else:
                     user_result = UserResult.objects.filter(mate_id=mate_id,span=span).values()[0]
                     char_result = CharResult.objects.filter(user_result_id=user_result["id"]).order_by("-rate_balance")
